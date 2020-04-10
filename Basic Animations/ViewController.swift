@@ -39,6 +39,10 @@ class ViewController: UIViewController {
     
     private func configureButtons() {
         
+        let squashButton = UIButton(type: .system)
+        squashButton.translatesAutoresizingMaskIntoConstraints = false
+        squashButton.setTitle("Squash", for: .normal)
+        squashButton.addTarget(self, action: #selector(squashButtonTapped), for: .touchUpInside)squash
         let keyButton = UIButton(type: .system)
         keyButton.translatesAutoresizingMaskIntoConstraints = false
         keyButton.setTitle("Key", for: .normal)
@@ -61,6 +65,8 @@ class ViewController: UIViewController {
         stackView.distribution = .equalSpacing
         stackView.addArrangedSubview(rotateButton)
         stackView.addArrangedSubview(springButton)
+        stackView.addArrangedSubview(keyButton)
+        stackView.addArrangedSubview(squashButton)
         
         NSLayoutConstraint.activate([
             
@@ -93,6 +99,27 @@ class ViewController: UIViewController {
     }
     
     @objc private func keyButtonTapped() {
+        label.center = view.center
+        
+        UIView.animateKeyframes(withDuration: 2.0, delay: 0, options: [], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.25) {
+                self.label.transform = CGAffineTransform(rotationAngle: .pi/4)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.25, relativeDuration: 0.25) {
+                self.label.transform = .identity
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.25) {
+                self.label.transform = CGAffineTransform(translationX: 0, y: -50)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.75, relativeDuration: 0.25) {
+                self.label.transform = .identity
+            }
+        }, completion: nil)
+    }
+    
+    @objc private func squashButtonTapped() {
+        label.center = view.center
+        
         
     }
     
