@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         let squashButton = UIButton(type: .system)
         squashButton.translatesAutoresizingMaskIntoConstraints = false
         squashButton.setTitle("Squash", for: .normal)
-        squashButton.addTarget(self, action: #selector(squashButtonTapped), for: .touchUpInside)squash
+        squashButton.addTarget(self, action: #selector(squashButtonTapped), for: .touchUpInside)
         let keyButton = UIButton(type: .system)
         keyButton.translatesAutoresizingMaskIntoConstraints = false
         keyButton.setTitle("Key", for: .normal)
@@ -118,10 +118,28 @@ class ViewController: UIViewController {
     }
     
     @objc private func squashButtonTapped() {
-        label.center = view.center
+        label.center = CGPoint(x: view.center.x, y: -label.bounds.size.height)
         
+        let animationBlock = {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.4) {
+                self.label.center = self.view.center
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.2) {
+                self.label.transform = CGAffineTransform(scaleX: 2, y: 0.6)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.2) {
+                self.label.transform = CGAffineTransform(scaleX: 0.6, y: 2)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.7, relativeDuration: 0.15) {
+                self.label.transform = CGAffineTransform(scaleX: 1.11, y: 0.9)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.85, relativeDuration: 0.15) {
+                self.label.transform = .identity
+            }
+        }
         
+        UIView.animateKeyframes(withDuration: 1.5, delay: 0, options: [], animations: animationBlock, completion: nil)
     }
     
-}
+} //End of class
 
